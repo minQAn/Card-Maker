@@ -1,4 +1,14 @@
+@value makerGreen, makerLightGrey from '../../common/colors.css';
+
 .editor {
   flex-basis: 50%;
-  background-color: wheat;
+  border-right: 1px solid makerLightGrey;
+  padding: 0.5em 2em;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1em;
+  color: makerGreen;
 }
