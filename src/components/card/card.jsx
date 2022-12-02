@@ -8,10 +8,6 @@ const Card = ({ card }) => {
     card;
   const url = fileURL || DEFAULT_IMAGE;
 
-  useEffect(() => {
-    console.log(url);
-  }, []);
-
   return (
     <li className={`${styles.card} ${getStyles(theme)}`}>
       <img className={styles.avatar} src={url} alt="avarta" />
