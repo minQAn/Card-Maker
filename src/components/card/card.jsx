@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import styles from './card.module.css';
 const DEFAULT_IMAGE = '/images/default_logo.png';
 
@@ -7,9 +8,13 @@ const Card = ({ card }) => {
     card;
   const url = fileURL || DEFAULT_IMAGE;
 
+  useEffect(() => {
+    console.log(url);
+  }, []);
+
   return (
     <li className={`${styles.card} ${getStyles(theme)}`}>
-      <img className={styles.avatar} src={url} alt="profile photo" />
+      <img className={styles.avatar} src={url} alt="avarta" />
       <div className={styles.info}>
         <h1 className={styles.name}>{name}</h1>
         <p className={styles.company}>{company}</p>
