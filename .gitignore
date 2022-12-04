@@ -27,3 +27,5 @@ yarn-error.log*
 
 #history
 .history
+# Local Netlify folder
+.netlify

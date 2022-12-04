@@ -5,7 +5,11 @@ class CardRepository {
     const ref = firebaseDatabase.ref(`${userId}/cards`);
     ref.on('value', (snapshot) => {
       const value = snapshot.val();
-      value && onUpdate(value);
+      if (value) {
+        onUpdate(value);
+      } else {
+        onUpdate([]);
+      }
     });
     // if want to off the sync.
     return () => ref.off();
