@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import styles from './maker.module.css';
@@ -13,9 +13,14 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
   const [cards, setCards] = useState({});
   const [userId, setUserId] = useState(locationState && locationState.id);
 
-  const onLogout = () => {
+  // To re-rendering check in header
+  // const onLogout = () => {
+  //   authService.logout();
+  // };
+
+  const onLogout = useCallback(() => {
     authService.logout();
-  };
+  }, [authService]);
 
   useEffect(() => {
     if (!userId) {
@@ -40,15 +45,19 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
     });
   }, [authService, navigate, userId]);
 
-  const createOrUpdateCard = (card) => {
-    setCards((cards) => {
-      const updated = { ...cards };
-      updated[card.id] = card;
-      return updated;
-    });
+  // useCallback to prevent unnecessary re-rendering in card_add_form section
+  const createOrUpdateCard = useCallback(
+    (card) => {
+      setCards((cards) => {
+        const updated = { ...cards };
+        updated[card.id] = card;
+        return updated;
+      });
 
-    cardRepository.saveCard(userId, card);
-  };
+      cardRepository.saveCard(userId, card);
+    },
+    [cardRepository, userId]
+  );
 
   const deleteCard = (card) => {
     setCards((cards) => {
