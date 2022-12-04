@@ -1,16 +1,15 @@
-import firebase from 'firebase';
-import firebaseApp from './firebase'; // to use the initialized app
+import { firebaseAuth, githubProvider, googleProvider } from './firebase'; // to use the initialized app
 
 // firebase Docs
 // https://firebase.google.com/docs/auth/web/google-signin
 class AuthService {
   login(providerName) {
-    const authProvider = new firebase.auth[`${providerName}AuthProvider`]();
-    return firebaseApp.auth().signInWithPopup(authProvider); // Promise
+    const authProvider = this.getProvider(providerName);
+    return firebaseAuth.signInWithPopup(authProvider); // Promise
   }
 
   logout() {
-    firebase.auth().signOut();
+    firebaseAuth.signOut();
   }
 
   // callback
@@ -28,9 +27,20 @@ class AuthService {
   service_auth는 그 중에서도 authorization과 관련된 작업만 한다.
   */
   onAuthChange(onUserChanged) {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebaseAuth.onAuthStateChanged((user) => {
       onUserChanged(user);
     });
+  }
+
+  getProvider(providerName) {
+    switch (providerName) {
+      case 'Google':
+        return googleProvider;
+      case 'Github':
+        return githubProvider;
+      default:
+        throw new Error(`not supported provider: ${providerName}`);
+    }
   }
 }
 

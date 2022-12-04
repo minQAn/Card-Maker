@@ -27,7 +27,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
     });
 
     return () => stopSync(); // when dismount this component, it will be executed.
-  }, [userId]);
+  }, [cardRepository, userId]);
 
   useEffect(() => {
     authService.onAuthChange((user) => {
@@ -38,12 +38,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
         navigate('/');
       }
     });
-  });
-
-  // const addCard = (card) => {
-  //   const updated = { ...cards, card };
-  //   setCards(updated);
-  // };
+  }, [authService, navigate, userId]);
 
   const createOrUpdateCard = (card) => {
     setCards((cards) => {
